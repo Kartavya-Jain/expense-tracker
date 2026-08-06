@@ -1,0 +1,21 @@
+h1{
+    background-color: red;
+    text-align: center;
+    font-size: 42px;
+    text-spacing-trim: 1px;
+    color: white;
+}
+nav{
+    background-color: rgba(rgb(198, 39, 39), rgb(82, 225, 82), rgb(62, 62, 210), alpha);
+    display: flex;
+    padding: 3px;
+}
+nav a{
+    background-color: rgb(209, 104, 19);
+    text-decoration: none;
+    font-size: 24px;
+    border-right: 0px;
+    border-radius: 5px;
+    padding: 3px;
+    color: white;
+}
