@@ -11,9 +11,24 @@ mycursor=db.cursor()
 #for row in mycursor.fetchall():
 #   print(row)
 def view_transactions():
-    mycursor.execute("Select * from Transactions")
-    for row in mycursor.fetchall():
-        print(row)
+    mycursor.execute("SELECT * FROM Transactions")
+    rows=mycursor.fetchall()
+    if not rows:
+        print("\n No transaction found.\n")
+        return
+    print("+-----+----------+----------------------+----------------------+--------------+-----------------------------------------------------")
+    print("| ID  |  Amount  |      Category        |         Type         |     Date     |                    Description                     |")
+    print("+-----+----------+----------------------+----------------------+--------------+-----------------------------------------------------")
+    for row in rows:
+        print(
+            f"| {row[0]:<3} "
+            f"| ₹{row[1]:<7} "
+            f"| {row[2]:<20} "
+            f"| {row[3]:<20} "
+            f"| {str(row[4]):<12} "
+            f"| {row[5]:<50} |"
+        )
+    print("+-----+----------+----------------------+----------------------+--------------+-----------------------------------------------------")
 def add_transaction():
     amount=int(input("Enter amount: "))
     category=str(input("Enter category: "))
