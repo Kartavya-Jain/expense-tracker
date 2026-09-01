@@ -6,7 +6,15 @@ def Menu():
     print("3. Update Transactions")
     print("4. Delete Transactions")
     print("5. Exit")
-    choice=int(input("Enter your choice: "))
+    while True:
+        try:
+            choice=int(input("Enter your choice: "))
+            if 1<=choice<=5:
+                break
+            else:
+                print("Invalid choice")
+        except ValueError:
+            print("Invalid input! Please enter a valid number")
     if choice==1:
         view_transactions()
     elif choice==2:

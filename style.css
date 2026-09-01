@@ -9,6 +9,7 @@ nav{
     background-color: rgba(rgb(198, 39, 39), rgb(82, 225, 82), rgb(62, 62, 210), alpha);
     display: flex;
     padding: 3px;
+    gap: 6px;
 }
 nav a{
     background-color: rgb(209, 104, 19);
