@@ -13,55 +13,52 @@ mycursor=db.cursor()
 def view_transactions():
     mycursor.execute("SELECT * FROM Transactions")
     rows=mycursor.fetchall()
-    if not rows:
-        print("\n No transaction found.\n")
-        return
-    print("+-----+----------+----------------------+----------------------+--------------+-----------------------------------------------------")
-    print("| ID  |  Amount  |      Category        |         Type         |     Date     |                    Description                     |")
-    print("+-----+----------+----------------------+----------------------+--------------+-----------------------------------------------------")
+    transactions = []
     for row in rows:
-        print(
-            f"| {row[0]:<3} "
-            f"| ₹{row[1]:<7} "
-            f"| {row[2]:<20} "
-            f"| {row[3]:<20} "
-            f"| {str(row[4]):<12} "
-            f"| {row[5]:<50} |"
-        )
-    print("+-----+----------+----------------------+----------------------+--------------+-----------------------------------------------------")
-def add_transaction():
-    amount=int(input("Enter amount: "))
-    category=str(input("Enter category: "))
-    transaction_type=str(input("Enter type: "))
-    date=str(input("Enter date (YYYY-MM-DD): "))
-    description=str(input("Enter description: "))
-    values=(amount, category, transaction_type, date, description)
-    mycursor.execute("insert into Transactions (amount, category, type, date, description) values (%s,%s,%s,%s,%s)", values)
+        transactions.append({
+            "id": row[0],
+            "amount": row[1],
+            "category": row[2],
+            "type": row[3],
+            "date": row[4],
+            "description": row[5]
+        })
+    return transactions
+def add_transaction(amount, category, transaction_type, date, description):
+    values = (amount, category, transaction_type, date, description)
+    mycursor.execute(
+        "INSERT INTO Transactions (amount, category, type, date, description) "
+        "VALUES (%s, %s, %s, %s, %s)",
+        values
+    )
     db.commit()
-    print("Transaction added successfully")
-def update_transaction():
-    id=int(input("Enter transaction id: "))
-    choice=int(input("What do you want to update?:\n1. Amount\n2. Category\n3. Transaction Type\n4. Date\n5. Description"))
+    return True
+def update_transaction(transaction_id, choice, value):
     if choice==1:
-        new_amount=int(input("Enter new amount: "))
-        amount_data=(new_amount,id)
-        mycursor.execute("Update Transactions set Amount=%s where id= %s",amount_data)
+        mycursor.execute(
+            "UPDATE Transactions SET Amount=%s WHERE id= %s",
+            (value, transaction_id)
+        )
     elif choice==2:
-        new_category=str(input("Enter new category: "))
-        category_data=(new_category,id)
-        mycursor.execute("Update Transactions set Category=%s where id= %s",category_data)
+        mycursor.execute(
+            "UPDATE Transactions SET Category=%s WHERE id= %s",
+            (value, transaction_id)
+        )
     elif choice==3:
-        new_transaction_type=int(input("Enter new type: "))
-        transaction_type_data=(new_transaction_type,id)
-        mycursor.execute("Update Transactions set Type=%s where id= %s",transaction_type_data)
+        mycursor.execute(
+            "UPDATE Transactions SET Type=%s WHERE id= %s",
+            (value, transaction_id)
+        )
     elif choice==4:
-        new_date=str(input("Enter new date: "))
-        date_data=(new_date,id)
-        mycursor.execute("Update Transactions set Date=%s where id= %s",date_data)
+        mycursor.execute(
+            "UPDATE Transactions SET Date=%s where id= %s",
+            (value, transaction_id)
+        )
     elif choice==5:
-        new_description=str(input("Enter new description: "))
-        description_data=(new_description,id)
-        mycursor.execute("Update Transactions set Description=%s where id= %s",description_data)
+        mycursor.execute(
+            "UPDATE Transactions SET Description=%s WHERE id= %s",
+            (value, transaction_id)
+        )
     db.commit()
     print("Transaction updated successfully")
 def delete_transaction():
