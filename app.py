@@ -28,7 +28,7 @@ def create_transactions(data: dict):
     return {
         "message": "Transaction added successfully"
     }
-@app.put("/transactions/{transactions_id}")
+@app.put("/transactions/{transaction_id}")
 def edit_transaction(transaction_id: int, data: dict):
     update_transaction(
         transaction_id,
@@ -38,7 +38,7 @@ def edit_transaction(transaction_id: int, data: dict):
     return {
         "message": "Transaction updated successfully"
     }
-@app.delete("/transaction/{transaction_id}")
+@app.delete("/transactions/{transaction_id}")
 def remove_transactions(transaction_id: int):
     delete_transaction(transaction_id)
     return {
