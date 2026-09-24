@@ -59,11 +59,13 @@ def update_transaction(transaction_id, choice, value):
             "UPDATE Transactions SET Description=%s WHERE id= %s",
             (value, transaction_id)
         )
+    else:
+        return False
     db.commit()
-    print("Transaction updated successfully")
-def delete_transaction():
-    transaction_id=int(input("Enter Transaction Id: "))
-    transaction_id=(transaction_id,)#Act as tuple
-    mycursor.execute("delete from Transactions where id =%s",transaction_id)
+    return True
+def delete_transaction(transaction_id):
+    mycursor.execute(
+        "DELETE FROM Transactions WHERE id =%s",
+        (transaction_id,)
+    )
     db.commit()
-    print("Transaction deleted successfully")
